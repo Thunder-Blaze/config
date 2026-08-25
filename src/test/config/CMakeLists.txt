@@ -38,7 +38,7 @@ foreach(testsourcefile ${testsources})
     CXX_EXTENSIONS OFF
   )
   if(MSVC)
-    target_compile_options(${exename} PRIVATE /W4 /WX /utf-8 /bigobj)
+    target_compile_options(${exename} PRIVATE /W4 /WX /utf-8 /bigobj /wd4459)
   else()
     target_compile_options(${exename} PRIVATE -pedantic -Wall -Wextra -Werror)
   endif()
