@@ -15,16 +15,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        compiler:
-          - g++-9
-          - g++-10
-          - g++-11
-          - g++-12
-          - clang++-13
-          - clang++-14
         build_type: [Debug, Release]
+        include:
+          - compiler: g++-9
+            os: ubuntu-22.04
+          - compiler: g++-10
+            os: ubuntu-22.04
+          - compiler: g++-11
+            os: ubuntu-22.04
+          - compiler: g++-12
+            os: ubuntu-latest
+          - compiler: clang++-13
+            os: ubuntu-22.04
+          - compiler: clang++-14
+            os: ubuntu-22.04
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     env:
       CXX: ${{ matrix.compiler }}
@@ -54,7 +60,7 @@ jobs:
           - clang++-12
         build_type: [Debug, Release]
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     env:
       CXX: ${{ matrix.compiler }}

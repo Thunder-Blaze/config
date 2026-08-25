@@ -15,10 +15,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        xcode: ['13', '14']
         build_type: [Debug, Release]
+        include:
+          - xcode: '15.4'
+            os: macos-14
+          - xcode: '16.2'
+            os: macos-15
 
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v3
