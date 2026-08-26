@@ -60,3 +60,53 @@ jobs:
 
     - working-directory: build/
       run: ctest -C ${{ matrix.build_type }} --output-on-failure
+
+  vs2026:
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+
+    runs-on: windows-2025-vs2026
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - run: cmake -E make_directory build
+
+    - shell: bash
+      working-directory: build/
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 18 2026"
+
+    - working-directory: build/
+      run: cmake --build . --config ${{ matrix.build_type }}
+
+    - working-directory: build/
+      run: ctest -C ${{ matrix.build_type }} --output-on-failure
+
+  vs2026-clang:
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+
+    runs-on: windows-2025-vs2026
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - run: cmake -E make_directory build
+
+    - shell: bash
+      working-directory: build/
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 18 2026" -T ClangCL
+
+    - working-directory: build/
+      run: cmake --build . --config ${{ matrix.build_type }}
+
+    - working-directory: build/
+      run: ctest -C ${{ matrix.build_type }} --output-on-failure
