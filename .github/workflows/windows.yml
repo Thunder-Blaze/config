@@ -17,7 +17,7 @@ jobs:
       matrix:
         build_type: [Debug, Release]
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v3
@@ -42,7 +42,7 @@ jobs:
       matrix:
         build_type: [Debug, Release]
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v3
@@ -61,13 +61,13 @@ jobs:
     - working-directory: build/
       run: ctest -C ${{ matrix.build_type }} --output-on-failure
 
-  vs2019:
+  vs2026:
     strategy:
       fail-fast: false
       matrix:
         build_type: [Debug, Release]
 
-    runs-on: windows-2019
+    runs-on: windows-2025-vs2026
 
     steps:
     - uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
 
     - shell: bash
       working-directory: build/
-      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019"
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 18 2026"
 
     - working-directory: build/
       run: cmake --build . --config ${{ matrix.build_type }}
@@ -86,13 +86,13 @@ jobs:
     - working-directory: build/
       run: ctest -C ${{ matrix.build_type }} --output-on-failure
 
-  vs2019-clang:
+  vs2026-clang:
     strategy:
       fail-fast: false
       matrix:
         build_type: [Debug, Release]
 
-    runs-on: windows-2019
+    runs-on: windows-2025-vs2026
 
     steps:
     - uses: actions/checkout@v3
@@ -103,7 +103,7 @@ jobs:
 
     - shell: bash
       working-directory: build/
-      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019" -T ClangCL
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 18 2026" -T ClangCL
 
     - working-directory: build/
       run: cmake --build . --config ${{ matrix.build_type }}
