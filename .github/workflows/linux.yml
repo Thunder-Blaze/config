@@ -47,6 +47,12 @@ jobs:
       with:
         submodules: recursive
 
+    - if: matrix.compiler == 'g++-9'
+      run: sudo apt-get update
+
+    - if: matrix.compiler == 'g++-9'
+      run: sudo apt-get install -y g++-9
+
     - run: cmake -E make_directory build
 
     - working-directory: build/
